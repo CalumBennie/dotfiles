@@ -11,7 +11,7 @@ config.initial_cols = 120
 config.initial_rows = 20
 
 -- Change the font
-config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" })
+config.font = wezterm.font("JetBrains Mono")
 config.font_size = 11
 
 -- Change the colour scheme
