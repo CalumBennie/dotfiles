@@ -14,10 +14,10 @@ setopt inc_append_history
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-alias kvim=NVIM_APPNAME="nvim-kickstart" nvim
-alias avim=NVIM_APPNAME="astro-vim" nvim
-alias cvim=NVIM_APPNAME="nvchad" nvim
-alias lvim=NVIM_APPNAME="lazy-nvim" nvim
+alias kvim=NVIM_APPNAME="'nvim-kickstart' nvim"
+alias avim=NVIM_APPNAME="'astro-vim' nvim"
+alias cvim=NVIM_APPNAME="'nvchad' nvim"
+alias lvim=NVIM_APPNAME="'lazy-nvim' nvim'"
 
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/share/omarchy/bin:$PATH"
 # eval "$(~/.local/bin/mise activate zsh)"
