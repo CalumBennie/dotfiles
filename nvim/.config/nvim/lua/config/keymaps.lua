@@ -65,6 +65,11 @@ map('<leader>sn', function()
     builtin.find_files({ cwd = vim.fn.stdpath('config') })
 end, '[S]earch [N]eovim files')
 
+-- Debugging
+local dap = require('dap')
+map('<leader>dt', dap.toggle_breakpoint, '[D]ebug Breakpoint [T]oggle')
+map('<leader>dc', dap.continue, '[D]ebug Breakpoint [C]ontinue')
+
 -- Gitsigns
 local gitsigns = require('gitsigns')
 

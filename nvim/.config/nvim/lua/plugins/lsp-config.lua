@@ -1,38 +1,33 @@
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 local servers = {
-    lua_ls = {
-        -- cmd = { ... },
-        -- filetypes = { ... },
-        -- capabilities = {},
-        settings = {
-            Lua = {
-                completion = {
-                    callSnippet = 'Replace',
-                },
-                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
-            },
-        },
-    },
+    -- lua_ls = {
+    --     -- cmd = { ... },
+    --     -- filetypes = { ... },
+    --     -- capabilities = {},
+    --     settings = {
+    --         Lua = {
+    --             completion = {
+    --                 callSnippet = 'Replace',
+    --             },
+    --             -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+    --             -- diagnostics = { disable = { 'missing-fields' } },
+    --         },
+    --     },
+    -- },
     bashls = {},
+    lemminx = {},
+    jdtls = {},
 }
 local ensure_installed = vim.tbl_keys(servers or {})
 
 vim.list_extend(ensure_installed, {
     'stylua', -- Formats Lua code
+    'xmlformatter', -- Formats xml
+    'biome', -- TS Formatter
+    'sonarlint-language-server', -- Java+Others Linter
 })
 
 return {
-    {
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-            library = {
-                -- Load luvit types when the `vim.uv` word is found
-                { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-            },
-        },
-    },
     {
         'mason-org/mason.nvim',
         opts = {},
@@ -47,7 +42,7 @@ return {
         automatic_installation = false,
         handlers = {
             function(server_name)
-                local server = servers[server_name] or {}
+                local server = servers or {}
                 -- This handles overriding only values explicitly passed
                 -- by the server configuration above. Useful when disabling
                 -- certain features of an LSP (for example, turning off formatting for ts_ls)
@@ -104,5 +99,11 @@ return {
                 },
             })
         end,
+    },
+    {
+        'mfussenegger/nvim-jdtls',
+        dependencies = {
+            'mfussenegger/nvim-dap',
+        }
     },
 }
