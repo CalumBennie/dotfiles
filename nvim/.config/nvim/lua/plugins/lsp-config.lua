@@ -24,7 +24,9 @@ vim.list_extend(ensure_installed, {
     'stylua', -- Formats Lua code
     'xmlformatter', -- Formats xml
     'biome', -- TS Formatter
-    'sonarlint-language-server', -- Java+Others Linter
+    'google-java-format',
+    'checkstyle',
+    -- 'sonarlint-language-server', -- Java+Others Linter
 })
 
 return {
@@ -34,7 +36,13 @@ return {
     },
     {
         'mason-org/mason-lspconfig.nvim',
-        opts = {},
+        opts = {
+            automatic_enable = {
+                exclude = {
+                    'jdtls', -- Uses nvim-jdtls
+                },
+            },
+        },
         dependencies = {
             { 'mason-org/mason.nvim', opts = {} },
             'neovim/nvim-lspconfig',
@@ -59,33 +67,33 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = { 'saghen/blink.cmp' },
-        config = function()
-            vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-                callback = function(event)
-                    local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-                    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                        buffer = event.buf,
-                        group = highlight_augroup,
-                        callback = vim.lsp.buf.document_highlight,
-                    })
-
-                    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                        buffer = event.buf,
-                        group = highlight_augroup,
-                        callback = vim.lsp.buf.clear_references,
-                    })
-
-                    vim.api.nvim_create_autocmd('LspDetach', {
-                        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-                        callback = function(event2)
-                            vim.lsp.buf.clear_references()
-                            vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event2.buf })
-                        end,
-                    })
-                end,
-            })
-        end,
+        -- config = function()
+        --     vim.api.nvim_create_autocmd('lspattach', {
+        --         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        --         callback = function(event)
+        --             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+        --             vim.api.nvim_create_autocmd({ 'cursorhold', 'cursorholdi' }, {
+        --                 buffer = event.buf,
+        --                 group = highlight_augroup,
+        --                 callback = vim.lsp.buf.document_highlight,
+        --             })
+        --
+        --             vim.api.nvim_create_autocmd({ 'cursormoved', 'cursormovedi' }, {
+        --                 buffer = event.buf,
+        --                 group = highlight_augroup,
+        --                 callback = vim.lsp.buf.clear_references,
+        --             })
+        --
+        --             vim.api.nvim_create_autocmd('lspdetach', {
+        --                 group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        --                 callback = function(event2)
+        --                     vim.lsp.buf.clear_references()
+        --                     vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event2.buf })
+        --                 end,
+        --             })
+        --         end,
+        --     })
+        -- end,
     },
     {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -95,7 +103,7 @@ return {
                 integrations = {
                     ['mason-lspconfig'] = true,
                     ['mason-null-ls'] = true,
-                    -- ['mason-nvim-dap'] = true,
+                    ['mason-nvim-dap'] = true,
                 },
             })
         end,

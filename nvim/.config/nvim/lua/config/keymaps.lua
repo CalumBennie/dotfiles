@@ -7,6 +7,9 @@ end
 -- map('<C-i>', 'i<cr><Esc>', 'Insert Carriage Return')
 map('<Esc>', '<cmd>nohlsearch<CR>', 'Remove Search Highlighting')
 
+map('>', '>gv', '[V]isually [>] Increase Indent', 'v')
+map('<', '<gv', '[V]isually [<] Decrease Indent', 'v')
+
 -- Windows
 map('<C-h>', '<C-w><C-h>', 'Move focus to the left window')
 map('<C-l>', '<C-w><C-l>', 'Move focus to the right window')
@@ -16,20 +19,24 @@ map('<C-k>', '<C-w><C-k>', 'Move focus to the upper window')
 -- LSP
 local builtin = require('telescope.builtin')
 map('<leader>q', builtin.quickfix, 'Open diagnostic [Q]uickfix list')
-map('<C-K>', vim.lsp.buf.hover, 'Documentation')
--- map('<leader>f', function()
---     require('conform').format({ async = true, lsp_format = 'fallback' })
--- end, '[F]ormat buffer')
+map('grh', vim.lsp.buf.hover, '[G]oto [H]over Documentation')
 map('grf', vim.lsp.buf.format, '[F]ormat')
-map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+map('grn', vim.lsp.buf.rename, '[G]oto code [R]e[n]ame')
 map('gra', vim.lsp.buf.code_action, '[G]oto code [a]ction', { 'n', 'x' })
-map('grr', builtin.lsp_references, '[G]oto [r]eferences')
-map('gri', builtin.lsp_implementations, '[G]oto [i]mplementation')
-map('grd', builtin.lsp_definitions, '[G]oto [d]efinition')
-map('grd', vim.lsp.buf.declaration, '[G]oto [d]eclaration')
+map('grr', builtin.lsp_references, '[G]oto code [r]eferences')
+map('gri', builtin.lsp_implementations, '[G]oto code [i]mplementation')
+map('grd', builtin.lsp_definitions, '[G]oto code [d]efinition')
+map('grd', vim.lsp.buf.declaration, '[G]oto code [d]eclaration')
 map('gO', builtin.lsp_document_symbols, 'Open Document Symbols')
 map('gW', builtin.lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
 map('grt', builtin.lsp_type_definitions, '[G]oto [T]ype Definition')
+
+-- Telescope Actions
+-- local telescope_actions = require('telescope.actions')
+-- map('<C-p>', telescope_actions.cycle_history_prev, 'History [P]revious', 'i')
+-- map('<C-n>', telescope_actions.cycle_history_next, 'History [N]ext', 'i')
+-- map('<C-k>', telescope_actions.move_selection_previous, 'History [K] Previous', 'i')
+-- map('<C-j>', telescope_actions.move_selection_next, 'History [J] Next', 'i')
 
 -- Search
 map('<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', '[S]earch File [B]rowser')
