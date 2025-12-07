@@ -1,16 +1,3 @@
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'java',
-    callback = function(args)
-        require('config.jdtls').setup()
-    end
-})
--- vim.cmd [[
---     augroup jdtls_lsp
---         autocmd!
---         autocmd FileType java lua require'config.jdtls'.setup_jdtls()
---     augroup end
--- ]]
-
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),

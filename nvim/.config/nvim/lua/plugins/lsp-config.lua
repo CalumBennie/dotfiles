@@ -1,31 +1,30 @@
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 local servers = {
-    -- lua_ls = {
-    --     -- cmd = { ... },
-    --     -- filetypes = { ... },
-    --     -- capabilities = {},
-    --     settings = {
-    --         Lua = {
-    --             completion = {
-    --                 callSnippet = 'Replace',
-    --             },
-    --             -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-    --             -- diagnostics = { disable = { 'missing-fields' } },
-    --         },
-    --     },
-    -- },
+    lua_ls = {
+        -- cmd = { ... },
+        -- filetypes = { ... },
+        -- capabilities = {},
+        settings = {
+            Lua = {
+                completion = {
+                    callSnippet = 'Replace',
+                },
+                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- diagnostics = { disable = { 'missing-fields' } },
+            },
+        },
+    },
     bashls = {},
     lemminx = {},
-    jdtls = {},
 }
 local ensure_installed = vim.tbl_keys(servers or {})
 
 vim.list_extend(ensure_installed, {
-    'stylua', -- Formats Lua code
+    'stylua',       -- Formats Lua code
     'xmlformatter', -- Formats xml
-    'biome', -- TS Formatter
-    'google-java-format',
-    'checkstyle',
+    'biome',        -- TS Formatter
+    -- 'google-java-format',
+    -- 'checkstyle',
     -- 'sonarlint-language-server', -- Java+Others Linter
 })
 
@@ -109,9 +108,10 @@ return {
         end,
     },
     {
-        'mfussenegger/nvim-jdtls',
-        dependencies = {
-            'mfussenegger/nvim-dap',
-        }
+        'nvim-java/nvim-java',
+        config = function()
+            require('java').setup()
+            vim.lsp.enable('jdtls')
+        end,
     },
 }
